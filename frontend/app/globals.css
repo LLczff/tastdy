@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --screen-height: calc(
+    100vh - 84px
+  ); /* entire screen minus header and footer height */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: "#000";
+  /* background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb)); */
+  font-family: var(--font-noto-sans), "sans-serif";
+}
+
+input[type="password"]::state(--ms-reveal),
+input[type="password"]::state(--ms-clear) {
+  display: none;
+}
+
+@layer base {
+  .main-container {
+    @apply flex min-h-[var(--screen-height)] flex-col;
+  }
+}
+
+@layer components {
+  /* Button start */
+  .btn-primary {
+    @apply bg-primary rounded-sm px-2 py-1 text-white hover:bg-secondary transition-all duration-300;
+  }
+  .btn-secondary {
+    @apply border border-gray-300 rounded-sm px-2 py-1 hover:text-secondary hover:border-secondary transition-all duration-300;
+  }
+  .btn-danger {
+    @apply bg-red-500 rounded-sm px-2 py-1 text-white hover:bg-red-400 transition-all duration-300;
+  }
+  /* Button end */
+
+  /* Authentication form start */
+  .auth-form {
+    @apply flex flex-col items-center gap-3 select-none;
+
+    h2 {
+      @apply text-2xl font-semibold mb-4;
+    }
+
+    .error {
+      @apply text-sm text-red-500;
+    }
+  }
+  .auth-field-container {
+    @apply w-full;
+  }
+  .auth-field-name {
+    @apply translate-y-[28px] translate-x-2 text-zinc-300 font-light pointer-events-none transition-all;
+  }
+  /* when input is focused or placeholder not shown(input has content) change the field-name state */
+  .auth-field-container:has(input:focus),
+  .auth-field-container:has(input:not(:placeholder-shown)) {
+    .auth-field-name {
+      @apply translate-y-0 translate-x-0 text-black font-normal;
+    }
+  }
+  .auth-field-box {
+    @apply flex w-full border rounded-sm;
+
+    input {
+      @apply h-full px-2 py-1 flex-1 rounded-sm outline-none;
+    }
+
+    button {
+      @apply text-xl pr-1;
+    }
+  }
+  .auth-form-switch {
+    @apply text-xs text-zinc-400 font-light;
+
+    span {
+      @apply text-primary cursor-pointer hover:underline hover:text-secondary;
+    }
+  }
+  /* Authentication form end */
+
+  /* Dropdown start */
+  .dropdown-container {
+    @apply relative flex items-center select-none cursor-pointer w-full h-12;
+  }
+  .dropdown-icon {
+    @apply border-r h-full px-2 group-hover:border-neutral-400;
+  }
+  .dropdown-box {
+    @apply flex items-center w-full h-full transition-colors duration-300 border bg-slate-50 hover:border-secondary hover:bg-gray-200;
+  }
+  .dropdown-list {
+    @apply absolute bg-slate-50 bottom-0 left-0 w-full translate-y-full divide-y duration-200 overflow-hidden border border-t-0 z-10;
+  }
+  .checkmark {
+    @apply before:content-[''] before:w-3 before:h-3 before:inline-block before:rounded-sm
+    before:mr-2
+    before:outline before:outline-1 before:outline-neutral-400
+    before:bg-inherit
+    before:checked:bg-primary before:checked:outline-primary
+    before:transition-colors before:duration-100;
+  }
+  /* Dropdown end */
+
+  /* Small dropdown start */
+  .dropdown-sm-list {
+    @apply text-sm hover:bg-neutral-100 whitespace-nowrap;
+  }
+  .dropdown-sm-item {
+    @apply flex items-center py-1 px-4;
+
+    span {
+      @apply text-base;
+    }
+  }
+  .dropdown-sm-icon {
+    @apply text-2xl;
+  }
+  /* Small dropdown end */
+
+  /* Carousel start */
+  .carousel-page {
+    @apply flex justify-center min-w-full pt-3 pb-5
+    xs:min-w-[50%] 
+    md:min-w-[33.33%] 
+    min-[992px]:min-w-[25%] 
+    xl:min-w-[20%];
+  }
+  .carousel-arrow {
+    @apply absolute top-1/2 -translate-y-1/2 cursor-pointer hover:opacity-40;
+  }
+  .carousel-img-container {
+    @apply relative w-60 h-60 transition-all duration-500
+    xs:w-48 xs:h-48 
+    sm:w-56 sm:h-56 
+    md:w-44 md:h-44 
+    min-[880px]:w-52 min-[880px]:h-52 
+    min-[992px]:w-44 min-[992px]:h-44
+    xl:w-48 xl:h-48
+    2xl:w-60 2xl:h-60;
+  }
+  /* Carousel end */
+
+  /* Pagination button start */
+  .btn-explore-pagination {
+    @apply w-7 text-center rounded-sm;
+  }
+  /* Pagination button end */
+
+  /* User posts start */
+  .user-post-caption {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(35, 35, 35, 0.6) 30%,
+      rgba(42, 42, 42, 0.5) 45%,
+      rgba(64, 64, 64, 0.25) 70%,
+      transparent
+    );
+  }
+  /* User posts end */
+
+  /* Image uploder start */
+  .image-box {
+    @apply relative w-full h-56 border border-dashed border-zinc-300;
+  }
+  /* Image uploder end */
+
+  /* Modal start */
+  .modal-bg {
+    @apply fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-50 z-50 flex justify-center items-center m-0 px-2;
+  }
+  /* Modal end */
+
+  /* Category radio start */
+  .category-radio {
+    @apply relative w-[52px] h-[52px] flex justify-center items-center cursor-pointer rounded-full text-2xl
+     bg-zinc-200 hover:bg-neutral-300 hover:text-secondary
+     has-[:checked]:bg-primary has-[:checked]:text-white transition-all duration-200;
+  }
+
+  .category-radio:hover::before {
+    content: attr(for);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    opacity: 0.75;
+    padding: 0 4px;
+    font-size: 0.75rem;
+    color: #fff;
+    border-radius: 2px;
+    background-color: #323232;
+    transform: translate(-50%, 110%);
+    text-wrap: nowrap;
+    z-index: 1;
+  }
+  /* Category radio end */
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

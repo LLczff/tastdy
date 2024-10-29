@@ -1,0 +1,44 @@
+services:
+  frontend:
+    container_name: tastdy_app
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      BASE_API_URL: ${BASE_API_URL}
+    ports:
+      - 3000:3000
+
+  backend:
+    container_name: tastdy_api
+    build:
+      context: backend
+      dockerfile: Dockerfile
+      target: deploy
+    environment:
+      MONGO_INITDB_HOST: ${MONGO_INITDB_HOST}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
+      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - 8080
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:8.0
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
+      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
+    expose:
+      - 27017
+    volumes:
+      - tastdy_data:/data/db
+      - ./database/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ./database/data:/docker-entrypoint-initdb.d/data:ro
+
+volumes:
+  tastdy_data:
