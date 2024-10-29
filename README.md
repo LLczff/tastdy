@@ -22,6 +22,7 @@ A vibrant recipe-sharing platform designed for food lovers and home chefs. Wheth
 - **Next.js 14**: A React-based frontend framework for building server-side rendered applications.
 - **Tailwind CSS**: A utility-first CSS framework for styling the application.
 - **GIN**: A lightweight Go framework for building the backend API.
+- **MongoDB**: NoSQL database.
 
 ## Getting Started
 
