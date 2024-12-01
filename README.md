@@ -38,9 +38,9 @@ Before you begin, ensure you have the following installed:
 To get started, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/username/myproject.git
+git clone https://github.com/LLczff/tastdy.git
 
-cd myproject
+cd tastdy
 ```
 
 ### 2. Create environmental file
@@ -49,7 +49,7 @@ This application require certain environment variables to be set. Create a `.env
 
 ```bash
 # MongoDB
-MONGO_INITDB_HOST="<your_mongo_host>"
+MONGO_INITDB_HOST="mongodb" # <mongo_service_name>
 MONGO_INITDB_DATABASE="<your_database_name>"
 MONGO_INITDB_USERNAME="<your_database_user>"
 MONGO_INITDB_PASSWORD="<your_database_password>"
@@ -58,8 +58,11 @@ MONGO_INITDB_PASSWORD="<your_database_password>"
 JWT_SECRET="<your_jwt_secret>"
 
 # API path
-BASE_API_URL="http://<backend_container_name>:<backend_container_port>"
+# http://<backend_service_name>:<backend_container_port>
+BASE_API_URL="http://backend:8080"
 ```
+
+If you want to edit the `MONGO_INITDB_HOST` or `BASE_API_URL`, ensure it follows the format described above.
 
 ### 3. Build and Run
 
@@ -71,7 +74,7 @@ docker compose up -d
 
 ### 4. Access the application
 
-Once the application is running, open your web browser and navigate to: http://localhost:3000
+Once the application is running, open your web browser and navigate to http://localhost:3000 or the port configured for your frontend, if it has been modified.
 
 ## Contact
 
