@@ -2,8 +2,6 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package*.json .
-# inject production env to prevent dev dependencies install
-ENV NODE_ENV production
 RUN npm install
 
 # Build stage
@@ -21,4 +19,5 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/package.json ./
+ENV NODE_ENV production
 CMD ["npm", "run", "start"]
