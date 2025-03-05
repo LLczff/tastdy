@@ -17,6 +17,7 @@ const DROPDOWN_MAX_HEIGHT =
   Math.ceil((DROPDOWN_ITEM_HEIGHT * KEBAB_ITEMS) / 5) * 5;
 
 const PostKebab: NextPage<PostKebabProps> = ({
+  postId,
   openEditorFunc,
   deletePostFunc,
 }) => {
@@ -43,13 +44,19 @@ const PostKebab: NextPage<PostKebabProps> = ({
           onClick={() => setShowDropdown(false)}
         >
           <li className="dropdown-sm-list">
-            <button className="dropdown-sm-item" onClick={openEditorFunc}>
+            <button
+              className="dropdown-sm-item"
+              onClick={(e) => openEditorFunc(e, postId)}
+            >
               <BiSolidEditAlt className="dropdown-sm-icon" />
               <span>&nbsp;Edit</span>
             </button>
           </li>
           <li className="dropdown-sm-list">
-            <button className="dropdown-sm-item" onClick={deletePostFunc}>
+            <button
+              className="dropdown-sm-item"
+              onClick={(e) => deletePostFunc(e, postId)}
+            >
               <MdDeleteForever className="dropdown-sm-icon" />
               <span>&nbsp;Delete</span>
             </button>

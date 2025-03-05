@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 // Type
@@ -26,7 +26,6 @@ const UserPost: NextPage<UserPostProps> = ({ owner, totalPosts, posts }) => {
   const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [postData, setPostData] = useState<RecipePost | null>(null);
-  const modifyRef = useRef<HTMLDivElement>(null);
   const { openPostModal } = UtilityHook();
 
   // Open read-only post
@@ -42,13 +41,16 @@ const UserPost: NextPage<UserPostProps> = ({ owner, totalPosts, posts }) => {
       return;
     }
 
-    // on own account, open when not clicking on kebab
-    if (modifyRef.current && !modifyRef.current.contains(target))
-      openPostModal(id);
+    // on own account, open post
+    openPostModal(id);
   };
 
   // Open post editor with fetched data
-  const openPostModifier = async (id: string) => {
+  const openPostModifier = async (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    id: string
+  ) => {
+    event.stopPropagation(); // prevent open post when clicking on kebab item
     try {
       const post: RecipePost | null = await getData(
         `/recipe/${id}`,
@@ -59,6 +61,14 @@ const UserPost: NextPage<UserPostProps> = ({ owner, totalPosts, posts }) => {
       throw new Error(ErrorMessage.ServerError);
     }
     setPostModalOpen(true);
+  };
+
+  const openPostDeleteConfirmation = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    id: string
+  ) => {
+    event.stopPropagation(); // prevent open post when clicking on kebab item
+    setDeleteTarget(id);
   };
 
   const handleDeletePost = async (id: string) => {
@@ -127,13 +137,11 @@ const UserPost: NextPage<UserPostProps> = ({ owner, totalPosts, posts }) => {
                   </div>
                 </figcaption>
                 {owner && (
-                  <div
-                    ref={modifyRef}
-                    className="absolute top-2 right-2 text-white hidden hover:bg-opacity-40 group-hover:block"
-                  >
+                  <div className="absolute top-2 right-2 text-white hidden hover:bg-opacity-40 group-hover:block">
                     <PostKebab
-                      openEditorFunc={() => openPostModifier(item._id)}
-                      deletePostFunc={() => setDeleteTarget(item._id)}
+                      postId={item._id}
+                      openEditorFunc={openPostModifier}
+                      deletePostFunc={openPostDeleteConfirmation}
                     />
                   </div>
                 )}

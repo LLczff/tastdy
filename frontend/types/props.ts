@@ -60,8 +60,15 @@ export type UserPostProps = UserProfile & {
 };
 
 export type PostKebabProps = {
-  openEditorFunc: () => Promise<void>;
-  deletePostFunc: () => void;
+  postId: string;
+  openEditorFunc: (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    id: string
+  ) => Promise<void>;
+  deletePostFunc: (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    id: string
+  ) => void;
 };
 
 export type PostEditorProps = CloseFunctionProps & {
