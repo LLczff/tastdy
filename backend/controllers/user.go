@@ -76,8 +76,8 @@ func (ctrl *UserController) PostLogin(c *gin.Context) {
 
 // Get user's own data, authentication needed
 func (ctrl *UserController) GetMe(c *gin.Context)  {
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	if !exists || !ok {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": constants.ErrUnauthorized})
 		return
@@ -111,8 +111,8 @@ func (ctrl *UserController) GetMe(c *gin.Context)  {
 
 // Get target user details, no need to authenticate
 func (ctrl *UserController) GetUser(c *gin.Context) {
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	var viewerObjId *primitive.ObjectID
 	if exists && ok {
 		temp, err := primitive.ObjectIDFromHex(id)
@@ -152,8 +152,8 @@ func (ctrl *UserController) PatchUserImage(c *gin.Context) {
 		return
 	}
 
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	if !exists || !ok {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": constants.ErrUnauthorized})
 		return

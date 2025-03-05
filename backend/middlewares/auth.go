@@ -20,7 +20,7 @@ func Authenticate() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("uid", *id)
+		c.Set("sub", *id)
 		c.Next()
 	}
 }
@@ -35,7 +35,7 @@ func OptionalAuthenticate() gin.HandlerFunc {
 		id, err := utils.ValidateToken(token)
 		if err == nil && id != nil {
 			// Set ID only if authenticated
-			c.Set("uid", *id)
+			c.Set("sub", *id)
 		}
 
 		c.Next()

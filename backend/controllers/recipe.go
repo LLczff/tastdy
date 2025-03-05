@@ -40,8 +40,8 @@ func (ctrl *RecipeController) GetRecipes(c *gin.Context) {
 		return
 	}
 
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	var objId *primitive.ObjectID
 	if exists && ok {
 		temp, err := primitive.ObjectIDFromHex(id)
@@ -70,8 +70,8 @@ func (ctrl *RecipeController) GetRecipe(c *gin.Context) {
 		return
 	}
 
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	var userObjId *primitive.ObjectID
 	if exists && ok {
 		temp, err := primitive.ObjectIDFromHex(id)
@@ -98,8 +98,8 @@ func (ctrl *RecipeController) PostRecipe(c *gin.Context) {
 		return
 	}
 
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	if !exists || !ok {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": constants.ErrUnauthorized})
 		return
@@ -148,8 +148,8 @@ func (ctrl *RecipeController) PutRecipe(c *gin.Context) {
 		return
 	}
 
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	if !exists || !ok {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": constants.ErrUnauthorized})
 		return
@@ -208,8 +208,8 @@ func (ctrl *RecipeController) PutRecipe(c *gin.Context) {
 
 
 func (ctrl *RecipeController) PatchRecipe(c *gin.Context) {
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	if !exists || !ok {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": constants.ErrUnauthorized})
 		return
@@ -249,8 +249,8 @@ func (ctrl *RecipeController) PatchRecipe(c *gin.Context) {
 
 
 func (ctrl *RecipeController) DeleteRecipe(c *gin.Context) {
-	uid, exists := c.Get("uid")
-	id, ok := uid.(string)
+	sub, exists := c.Get("sub")
+	id, ok := sub.(string)
 	if !exists || !ok {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": constants.ErrUnauthorized})
 		return

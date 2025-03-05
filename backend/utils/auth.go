@@ -10,7 +10,7 @@ import (
 )
 
 type Claims struct {
-	UID	string `json:"uid"`
+	Sub	string `json:"sub"`
 	jwt.RegisteredClaims
 }
 
@@ -18,7 +18,7 @@ func GenerateToken(id string) (*string, error) {
 	secret := os.Getenv("JWT_SECRET")
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"uid": id,
+		"sub": id,
 		"iat": time.Now().Unix(),
 		"exp": time.Now().Add(24 * time.Hour).Unix(), // one day
 	})
@@ -47,7 +47,7 @@ func ValidateToken(signed string) (*string, error) {
 		return nil, err
 	}
 
-	return &claims.UID, nil
+	return &claims.Sub, nil
 }
 
 
