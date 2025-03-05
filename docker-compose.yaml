@@ -21,7 +21,7 @@ services:
       MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
       MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
-    ports:
+    expose:
       - 8080
     depends_on:
       - mongodb
